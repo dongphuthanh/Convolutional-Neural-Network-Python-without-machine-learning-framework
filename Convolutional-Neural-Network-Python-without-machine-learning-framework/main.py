@@ -11,7 +11,7 @@ def main():
     test_data=[]
     test_data.append(a1);test_data.append(a2);test_data.append(a3)
     w,aw,r=run_model("digits.png","divide picture",test_data,(20,20))
-
+    #If the model work correctly, the output will bw Four, Three and Zero
 
 if __name__ == "__main__":
     main()
