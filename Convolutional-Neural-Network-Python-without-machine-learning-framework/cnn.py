@@ -88,15 +88,10 @@ def update_weights(features,output,weights,learning_rate):
     print(features.shape)
     print(weights.shape)
     print(predicted.shape)
-   #print(np.linalg.norm(predicted-output))
     weights=weights-learning_rate*(((output-predicted)@features.T).T)
     
     return weights
 def Adam(features,output,weights,lr,t,beta1=0.9,beta2=0.999,epsilon=1e-08):
-    #print(features.shape)
-    #print(output.shape)
-    #print(weights)
-    #print(type(weights))
     predicted=predict(features,weights)
     g=(-(output-predicted)@features.T).T
     m=np.zeros(weights.shape)
@@ -106,8 +101,6 @@ def Adam(features,output,weights,lr,t,beta1=0.9,beta2=0.999,epsilon=1e-08):
     v=beta2*v+(1-beta2)*(g*g)
     m_hat=m/(1-(beta1**(t+1)))
     v_hat=v/(1-(beta2**(t+1)))
-    #print(m_hat,v_hat)
-    #print(type(((lr*m_hat)/(np.sqrt(v_hat)+epsilon)).T))
     weights=weights-((lr*m_hat)/(np.sqrt(v_hat)+epsilon))
  
     return weights
@@ -119,14 +112,6 @@ def softmax_regression(data,output,learning_rate,epoch):
     pre_weights=0
     weights=np.zeros((len(data[0]),len(output[0])))
     model=linear_model.LogisticRegression(C=1e5,solver='lbfgs',multi_class='multinomial')
-    """for i in range(epoch):
-        predicted=predict(data_hat,weights)
-        print(np.linalg.norm(predicted-output_hat))
-        #for n in np.random.permutation(len(output)):
-        weights=Adam(data_hat,output_hat,weights,learning_rate,i)
-            #if np.linalg.norm(weights-pre_weights)<0.0001:
-             #   print(i)
-              #  break"""
     return weights
 def softmax_regression_2(data,output,x1,x2,x3):
     output=np.asarray(output)
@@ -140,8 +125,6 @@ def softmax_regression_2(data,output,x1,x2,x3):
     y1=model.predict(x1)
     y2=model.predict(x2)
     y3=model.predict(x3)
-    #for i in range(epoch):
-    #    weights=update_weights(data,output,weights,learning_rate)
     return y1,y2,y3
 def CNN(data,output,lr,epoch):
     k1=np.random.rand(3,3)
@@ -279,11 +262,6 @@ def CNN(data,output,lr,epoch):
     
 def train(folder,reshape_dim,learning_rate,epoch):
     data,output=load_data(folder)
-    #data=[1,2,3,4,5,6,7,8,9,10,11,12,13]
-    #print(output)
-    #print(output[0].shape)
-    #print(data[0].shape)
-    #print(data[1])
     data=parallel_2(data,reshape_dim)
     weights=softmax_regression(data,output,learning_rate,epoch)
     return weights
