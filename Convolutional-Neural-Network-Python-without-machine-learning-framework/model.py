@@ -23,7 +23,6 @@ def load_data(folder):
     #USE THIS FUNCTION IF YOU HAVE YOUR OWN DATA FILES WITH MANY TRAIN IMAGES
     images=[]
     n=len(os.listdir(folder))
-    #print(n)
     output=[]
     iters = 0
     for filename in os.listdir(folder):
@@ -59,8 +58,6 @@ def divide_picture(filename,reshape_dim):
         output.append(out)
         if i%250==0:
             iters+=1
-    #print(len(features))
-    #print(len(output))
     return features,output
 def one_hot_encoding(arr):
     y=np.zeros(arr.shape)
@@ -131,7 +128,6 @@ class ActivationLayer:
     def fit(self,t):
         grad=[]
         bias_grad=[]
-        #print('fuck ',self.features[0].shape)
         if self.weights is None:
             self.weights=iWeight((len(self.fcn[0]),len(self.output[0])))
             self.bias=0
@@ -159,8 +155,6 @@ class ActivationLayer:
         for i in self.grad:
             x=self.weights@i
             x=x.reshape(self.features[0].shape)
-            #print('grad shape: ',i.shape)
-            #print('x: ',type(x))
             self.backprop.append(x)
         
 
@@ -235,9 +229,7 @@ class Layer:
                 else:
                     self.foward_result=self.result
     def feed_backward(self,dconv_prev):
-        #print(len(dconv_prev))
-        #for i in dconv_prev:
-        #    print(i.shape)
+       
         if self.args==None:
             if self.weights is None:
                 p=Pool(os.cpu_count())
@@ -280,7 +272,7 @@ class Layer:
                 self.bias,self.bias_args=self.optimizer(self.bias_grad,self.bias,self.lr,t,self.bias_args,*args)
         return self
 
-#backward=grad_func(dconv_prev,*self.args,self.result,self.weights)
+
 
 class Model:
     def __init__(self,filename,load_method,reshape_dim):
