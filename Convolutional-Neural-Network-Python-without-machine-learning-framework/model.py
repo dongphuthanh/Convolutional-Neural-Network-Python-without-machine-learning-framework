@@ -428,9 +428,9 @@ class Model:
 
 def run_model(filename,load_method,test_data,reshape_dim):
     model=Model(filename,load_method,reshape_dim)
-    model.Add("conv_layer","convbackprop",None,iFilter((3,3)),1e-8,"Adam",None,0.003,False)  
+    model.Add("conv_layer","convbackprop",None,iFilter((3,3)),1e-8,"Adam",None,0.001,False)  
     model.Add("max_pooling","maxpool_backprop",None,None,None,None,None,None,True)
-    model.compile(activation="softmax",optimizer="Adam",lr=0.003,epoch=200)    
+    model.compile(activation="softmax",optimizer="Adam",lr=0.001,epoch=50)    
     model.fit()
     result=model.predicted(test_data)
     for r in result:
